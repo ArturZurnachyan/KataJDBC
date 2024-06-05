@@ -1,24 +1,42 @@
 package jm.task.core.jdbc.util;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+import java.util.Properties;
 
 public class Util {
+    private static Properties PROPERTIES= new Properties();
 
-    private static final String PASSWORD_KEY = "jpapwd";
-    private static final String USERNAME_KEY = "jpauser";
-    private static final String URL_KEY = "jdbc:mysql://localhost:3306/test1";
-
-    private Util() {
+    static {
+        loadProperties();
     }
 
-    public static Connection open() {
+    public static String get(String key){
+        return PROPERTIES.getProperty(key);
+    }
+
+    private static void loadProperties() {
+        try (InputStream inputStream = Util.class.getClassLoader().getResourceAsStream("Application.properties")) {
+            PROPERTIES.load(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private static final String PASSWORD_KEY = "db.password";
+    private static final String USERNAME_KEY = "db.username";
+    private static final String URL_KEY = "db.url";
+
+    private Util(){
+    }
+
+    public static Connection open(){
         try {
             return DriverManager.getConnection(
-                    URL_KEY,
-                    USERNAME_KEY,
-                    PASSWORD_KEY);
+                    get(URL_KEY),
+                    get(USERNAME_KEY),
+                    get(PASSWORD_KEY));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
