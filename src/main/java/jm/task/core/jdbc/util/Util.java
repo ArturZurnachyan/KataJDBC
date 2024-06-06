@@ -40,9 +40,9 @@ public class Util {
                     Configuration configuration = new Configuration();
                     Properties properties = new Properties();
                     properties.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
-                    properties.put(Environment.URL, "jdbc:mysql://localhost:3306/test");
-                    properties.put(Environment.USER, "jpauser");
-                    properties.put(Environment.PASS, "jpapwd");
+                    properties.put(Environment.URL, URL_KEY);
+                    properties.put(Environment.USER, USERNAME_KEY);
+                    properties.put(Environment.PASS, PASSWORD_KEY);
                     properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
                     properties.put(Environment.SHOW_SQL, "true");
                     properties.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
